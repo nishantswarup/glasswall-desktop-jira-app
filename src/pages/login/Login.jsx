@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   button: {
-    backgroundColor:'red'
+    backgroundColor:theme.palette.primary ||'#dadada'
   },
   logo: {
     position: "relative",
