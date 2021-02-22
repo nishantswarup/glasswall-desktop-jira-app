@@ -1,0 +1,64 @@
+.widget .widget-custom {
+  padding-botton: 40px;
+}
+
+span.pull-right.new-environment {
+  background-color: green;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-top: -5px;
+  font-family: Montserrat;
+  font-size: 15px;
+}
+
+span.pull-right.new-environment i.fa {
+  padding: 5px;
+}
+img.companyLogoinner {
+  width: 100px;
+}
+.MuiPaper-root {
+  color: #fff !important;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  background-color: #142f43 !important;
+  /* background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);
+    background: linear-gradient(to right, #24243e, #302b63, #0f0c29); */
+}
+.MuiDrawer-docked .MuiSvgIcon-root {
+  fill: #fff !important;
+  font-size: 1.3rem !important;
+}
+.dropdown-menu.show {
+  position: absolute;
+  transform: translate3d(-97px, 38px, 0px);
+  top: 16px;
+  left: 0px;
+  will-change: transform;
+  padding: 10px 15px;
+  background: #1c183f;
+  color: #fff;
+}
+ul.dropdown-menu.show li a {
+  color: #fff;
+  font-size: 13px;
+  margin: 10px 0 10px 0;
+  padding: 5px 0;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+ul.dropdown-menu.show li a svg {
+  margin-right: 5px;
+}
+button.btn.btn-primary.dropdown-toggle {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+.makeStyles-drawerPaper-9 img.companyLogoinner {
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 3px;
+}
