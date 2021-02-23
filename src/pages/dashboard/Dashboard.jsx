@@ -1,39 +1,23 @@
-import React from "react";
-import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
+import React                      from "react";
+import clsx                       from "clsx";
+import { makeStyles }             from "@material-ui/core/styles";
+import CssBaseline                from "@material-ui/core/CssBaseline";
+import Drawer                     from "@material-ui/core/Drawer";
+import Box                        from "@material-ui/core/Box";
+import AppBar                     from "@material-ui/core/AppBar";
 import Toolbar                    from "@material-ui/core/Toolbar";
 import List                       from "@material-ui/core/List";
 import Typography                 from "@material-ui/core/Typography";
 import Divider                    from "@material-ui/core/Divider";
 import IconButton                 from "@material-ui/core/IconButton";
 import Container                  from "@material-ui/core/Container";
-import SettingsOutlinedIcon       from "@material-ui/icons/SettingsOutlined";
-import Link                       from "@material-ui/core/Link";
 import MenuIcon                   from "@material-ui/icons/Menu";
 import ChevronLeftIcon            from "@material-ui/icons/ChevronLeft";
-import ExitToAppOutlinedIcon      from "@material-ui/icons/ExitToAppOutlined";
-import AccountCircleOutlinedIcon  from "@material-ui/icons/AccountCircleOutlined";
-import { useHistory }             from "react-router-dom";
-import { mainListItems }          from "../../components/ListItems";
+import ListItems                  from "../../components/ListItems";
+import MenuOption                 from "../dashboard/components/MenuOption";
 import logo                       from "../../images/logo.6c8e5727.svg";
-import                                  "./Dashboard.css";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import                                 "./Dashboard.css";
+import Copyright                  from "../../components/Copyright"
 
 const drawerWidth = 240;
 
@@ -117,8 +101,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-  const history = useHistory();
-  const navigateTo = () => history.push("/login"); //eg.history.push('/login');
+
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -128,7 +111,7 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  
 
   return (
     <div className={classes.root}>
@@ -160,28 +143,7 @@ export default function Dashboard() {
             {/* <img src={logo} alt="Logo" className="companyLogoinner" /> */}
           </Typography>
 
-          <div className="dropdown">
-            <button
-              className="btn btn-primary dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-            >
-              <SettingsOutlinedIcon />
-              <span className="caret"></span>
-            </button>
-            <ul className="dropdown-menu">
-              <li>
-                <a href="#">
-                  <AccountCircleOutlinedIcon /> Profile
-                </a>
-              </li>
-              <li>
-                <a to="/login" onClick={navigateTo}>
-                  <ExitToAppOutlinedIcon /> Logout
-                </a>
-              </li>
-            </ul>
-          </div>
+          <MenuOption/>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -198,7 +160,7 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List><ListItems /></List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

@@ -1,13 +1,11 @@
 import React                       from "react";
 import { useHistory }              from "react-router-dom";
-import PersonOutlineOutlinedIcon   from "@material-ui/icons/PersonOutlineOutlined";
-import VpnKeyOutlinedIcon          from "@material-ui/icons/VpnKeyOutlined";
+import MailOutlineIcon             from '@material-ui/icons/MailOutline';
 import Button                      from "@material-ui/core/Button";
-import Link                        from "@material-ui/core/Link";
-import logo                        from "../../images/logo.6c8e5727.svg";
-import PasswordInputFeild          from "../../components/PasswordInputFeild";
-import NameInputFeild              from "../../components/NameInputFeild";
 import { makeStyles }              from "@material-ui/core/styles";
+import logo                        from "../../images/logo.6c8e5727.svg";
+import EmailInputFeild             from "../../components/EmailInputFeild";
+
 
 const useStyles = makeStyles((theme) => ({
   main_wrapper: {
@@ -70,30 +68,31 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "600",
     textAlign: "center",
     display: "block",
-    marginBottom: "12px",
+    marginBottom: "0px",
     fontSize: "14px",
     position: "relative",
     float: "right",
     textDecoration: "none",
-    cursor:"pointer",
+    cursor: "pointer",
   },
 
   button: {
     marginTop: "10px",
     display: "block",
-    margin: theme.spacing(3, 0, 0),
+    margin: theme.spacing(3, 0, 2),
     width: "100%",
     backgroundColor: "#1a919a",
     color: "#ffffff",
+  
+   
   },
 }));
 
-const Login = () => {
+const ResetPassword = () => {
   const classes = useStyles();
 
   const history = useHistory();
-  const navigateTo = () => history.push("/dashboard");
-  const navigatesTo = () => history.push("/resetpassword");
+  const navigateTo = () => history.push("/login"); //eg.history.push('/login');
 
   return (
     <>
@@ -105,26 +104,22 @@ const Login = () => {
           <div className={classes.form_box}>
             <form autocomplete="off">
               <div className={classes.form_group}>
-                <PersonOutlineOutlinedIcon className={classes.svg_icon} />
-                <NameInputFeild />
+                <MailOutlineIcon className={classes.svg_icon} />
+                <EmailInputFeild />
               </div>
-              <div className={classes.form_group}>
-                <VpnKeyOutlinedIcon className={classes.svg_icon} />
-                <PasswordInputFeild />
-              </div>
-              <Link to="/resetpassword" onClick={navigatesTo} className={classes.forgottenPassword}>
-                Forgotten Password
-              </Link>
               <Button
                 className={classes.button}
                 variant="contained"
                 color="primary"
                 type="submit"
-                value="Log In"
-                onClick={navigateTo}
+                value="Submit"
+                
               >
-                Log In
+                Submit
               </Button>
+              <a onClick={navigateTo} className={classes.forgottenPassword}>
+              Already have an account? Log In
+              </a>
             </form>
           </div>
         </div>
@@ -133,4 +128,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ResetPassword;
