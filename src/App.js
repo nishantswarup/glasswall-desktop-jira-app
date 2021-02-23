@@ -1,8 +1,10 @@
-import "./App.css";
-import "../node_modules/font-awesome/css/font-awesome.min.css";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Login from "./pages/login/Login";
+import                                  "./App.css";
+import                                  "../node_modules/font-awesome/css/font-awesome.min.css";
+import Dashboard                   from "./pages/dashboard/Dashboard";
+import Login                       from "./pages/login/Login";
+import ResetPassword               from "./pages/password/ResetPassword";
+import About                       from "./pages/about/About";
 
 const App = () => {
   return (
@@ -10,6 +12,8 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/dashboard" component={Dashboard} />
+        <Route exact path="/resetpassword" component={ResetPassword} />
+        <Route exact path="/about" component={About} />
         <Redirect to="/" />
       </Switch>
     </div>
