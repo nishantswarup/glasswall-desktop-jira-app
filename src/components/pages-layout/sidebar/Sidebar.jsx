@@ -1,24 +1,19 @@
 import React                      from "react";
 import clsx                       from "clsx";
 import { makeStyles }             from "@material-ui/core/styles";
-import CssBaseline                from "@material-ui/core/CssBaseline";
 import Drawer                     from "@material-ui/core/Drawer";
-import Box                        from "@material-ui/core/Box";
-import AppBar                     from "@material-ui/core/AppBar";
-import Toolbar                    from "@material-ui/core/Toolbar";
 import List                       from "@material-ui/core/List";
-import Typography                 from "@material-ui/core/Typography";
 import Divider                    from "@material-ui/core/Divider";
 import IconButton                 from "@material-ui/core/IconButton";
-import Container                  from "@material-ui/core/Container";
-import MenuIcon                   from "@material-ui/icons/Menu";
 import ChevronLeftIcon            from "@material-ui/icons/ChevronLeft";
-import ListItems                  from "../../components/ListItems";
-import MenuOption                 from "../dashboard/components/MenuOption";
-import logo                       from "../../images/logo.6c8e5727.svg";
-import                                 "./Dashboard.css";
-import Copyright                  from "../../components/Copyright"
-//import About                      from "../about/About";
+import AppBar                     from "@material-ui/core/AppBar";
+import Toolbar                    from "@material-ui/core/Toolbar";
+import MenuIcon                   from "@material-ui/icons/Menu";
+import Typography                 from "@material-ui/core/Typography";
+import MenuOption                 from "../../../pages/dashboard/components/MenuOption";
+import logo                       from "../../../images/logo.6c8e5727.svg";
+import ListItems                  from "../../ListItems";
+import                                 "../../../pages/dashboard/Dashboard.css";
 
 const drawerWidth = 240;
 
@@ -101,9 +96,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
-
-
+const Sidebar = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -112,12 +105,10 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
+    <>
+    <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
@@ -140,11 +131,9 @@ export default function Dashboard() {
             color="inherit"
             noWrap
             className={classes.title}
-          >
-            {/* <img src={logo} alt="Logo" className="companyLogoinner" /> */}
-          </Typography>
+          ></Typography>
 
-          <MenuOption/>
+          <MenuOption />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -161,16 +150,12 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List><ListItems /></List>
+        <List>
+          <ListItems />
+        </List>
       </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
+    </>
   );
-}
+};
+
+export default Sidebar;

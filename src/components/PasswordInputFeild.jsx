@@ -6,16 +6,16 @@ const useStyles = makeStyles((theme) => ({
   form_controled: {
     width: "100%",
     paddingLeft: "40px",
-    color: "#fff",
+    color: "#000",
   },
   form_controled: {
     "& .MuiFormLabel-root": {
-      color: "#fff",
+      color: "#000",
       left: "30px !important",
       width: "100%",
     },
     "& .MuiFilledInput-input": {
-      color: "#fff",
+      color: "#000",
       paddingLeft: "40px",
     },
   },

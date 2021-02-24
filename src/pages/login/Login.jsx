@@ -11,20 +11,20 @@ import { makeStyles }              from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   main_wrapper: {
-    color: "#fff",
-    background: "rgb(12,52,81)",
-    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    color: "#000",
+    background: "#f2f0f0",
     minHeight: "100vh",
     position: "relative",
   },
   button: {
-    backgroundColor:theme.palette.primary ||'#dadada'
+    backgroundColor: theme.palette.primary || "#dadada",
   },
   logo: {
     position: "relative",
-    margin: "0px auto 120px",
-    top: "60px",
+    margin: "0px auto 70px",
     textAlign: "center",
+    background:
+      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
   },
   companyLogo: {
     width: "170px",
@@ -38,10 +38,11 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   form_box: {
-    padding: "30px",
+    padding: "0px",
     boxShadow: "0px 0px 9px 4px rgb(255 255 255 / 20%)",
     borderRadius: "6px",
-    width: "27rem",
+    width: "860px",
+    background: "#fff",
   },
 
   form: {
@@ -55,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiFormControl-root": {
       width: "100%",
       marginBottom: "10px",
+      "& .MuiInputBase-root": {
+        background: "#fff",
+        border: "1px solid #acacac",
+      }
     },
   },
 
@@ -63,6 +68,8 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 0",
     top: "15px",
     left: "10px",
+    fill: "#000 !important",
+    zIndex: "11",
   },
 
   forgottenPassword: {
@@ -75,7 +82,33 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     float: "right",
     textDecoration: "none",
-    cursor:"pointer",
+    cursor: "pointer",
+  },
+
+  form_left: {
+    float: "left",
+    background:
+      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    padding: "0px",
+    width: "50%",
+    minHeight: "55vh",
+  },
+  form_right: {
+    float: "right",
+    padding: "0px",
+    width: "50%",
+    background: "#fff",
+    minHeight: "55vh",
+  },
+  clearfix: {
+    clear: "both",
+  },
+  form_inner_l: {
+    padding: "60px 50px",
+    color: "#fff",
+    "& p": {
+      lineHeight: "24px",
+    },
   },
 
   button: {
@@ -83,8 +116,36 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: theme.spacing(3, 0, 0),
     width: "100%",
-    backgroundColor: "#1a919a",
+    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
     color: "#ffffff",
+  },
+  form_heading: {
+    color: "#000",
+    fontSize: "27px",
+    position: "relative",
+    margin: "0 0 0 0",
+    top: "-25px",
+  },
+  form_heading_left: {
+    color: "#fff",
+    fontSize: "27px",
+  },
+  footer: {
+    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    color:"#fff",
+    padding: "10px 10px",
+    textAlign: "center",
+    margin: "0 0 0 0", 
+    position: "fixed",
+    bottom: "0",
+    width: "100%",
+
+  },
+  companyLogos: {
+    width: "100px",
+    position: "relative",
+    top:"-20px",
+    margin: "0 0 -40px",
   },
 }));
 
@@ -98,35 +159,62 @@ const Login = () => {
   return (
     <>
       <div className={classes.main_wrapper}>
+        <div className={classes.logo}>
+          <img src={logo} alt="Logo" className={classes.companyLogo} />
+        </div>
         <div className={classes.paper}>
-          <div className={classes.logo}>
-            <img src={logo} alt="Logo" className={classes.companyLogo} />
-          </div>
           <div className={classes.form_box}>
-            <form autocomplete="off">
-              <div className={classes.form_group}>
-                <PersonOutlineOutlinedIcon className={classes.svg_icon} />
-                <NameInputFeild />
+            <div className={classes.form_left}>
+              <div className={classes.form_inner_l}>
+              <img src={logo} alt="Logo" className={classes.companyLogos} />
+                <h3 className={classes.form_heading_left}>
+                  Glasswall Desktop Jira
+                </h3>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat.{" "}
+                </p>
               </div>
-              <div className={classes.form_group}>
-                <VpnKeyOutlinedIcon className={classes.svg_icon} />
-                <PasswordInputFeild />
+            </div>
+            <div className={classes.form_right}>
+              <div className={classes.form_inner_l}>
+                <h3 className={classes.form_heading}>Login Account</h3>
+                <form autocomplete="off">
+                  <div className={classes.form_group}>
+                    <PersonOutlineOutlinedIcon className={classes.svg_icon} />
+                    <NameInputFeild />
+                  </div>
+                  <div className={classes.form_group}>
+                    <VpnKeyOutlinedIcon className={classes.svg_icon} />
+                    <PasswordInputFeild />
+                  </div>
+                  <Link
+                    to="/resetpassword"
+                    onClick={navigatesTo}
+                    className={classes.forgottenPassword}
+                  >
+                    Forgotten Password
+                  </Link>
+                  <Button
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    value="Log In"
+                    onClick={navigateTo}
+                  >
+                    Log In
+                  </Button>
+                </form>
               </div>
-              <Link to="/resetpassword" onClick={navigatesTo} className={classes.forgottenPassword}>
-                Forgotten Password
-              </Link>
-              <Button
-                className={classes.button}
-                variant="contained"
-                color="primary"
-                type="submit"
-                value="Log In"
-                onClick={navigateTo}
-              >
-                Log In
-              </Button>
-            </form>
+            </div>
+            <div className={classes.clearfix}></div>
           </div>
+        </div>
+        <div className={classes.footer}>
+          <p>© 2021 copyright. All right reserved</p>
         </div>
       </div>
     </>
