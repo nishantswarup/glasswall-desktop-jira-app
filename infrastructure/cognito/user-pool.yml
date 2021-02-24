@@ -1,0 +1,31 @@
+Resources:    
+  JiraOpsUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: ${self:custom.JiraOpsUserPoolName}
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      MfaConfiguration: "OFF"   
+      UsernameConfiguration:
+        CaseSensitive: false
+      Schema:        
+        - Name: email
+          AttributeDataType: String
+          Mutable: false
+          Required: true        
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: True
+          RequireNumbers: True
+          RequireSymbols: False
+          RequireUppercase: True                            
+
+  JiraOpsUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: ${self:custom.JiraOpsUserPoolClientName}
+      UserPoolId: !Ref JiraOpsUserPool
+      GenerateSecret: false

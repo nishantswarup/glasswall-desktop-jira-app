@@ -1,0 +1,58 @@
+Resources:  
+
+  JiraOpsIdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      IdentityPoolName: ${self:custom.JiraOpsIdentityPoolName}
+      AllowUnauthenticatedIdentities: false
+      CognitoIdentityProviders: 
+        - ClientId: !Ref JiraOpsUserPoolClient
+          ProviderName: !GetAtt JiraOpsUserPool.ProviderName
+  
+  JiraOpsCognitoAuthorizedRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal: 
+              Federated: "cognito-identity.amazonaws.com"
+            Action: 
+              - "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals: 
+                "cognito-identity.amazonaws.com:aud": !Ref JiraOpsIdentityPool
+              "ForAnyValue:StringLike":
+                "cognito-identity.amazonaws.com:amr": authenticated
+      Policies:
+        - PolicyName: "CognitoAuthorizedPolicy"
+          PolicyDocument: 
+            Version: "2012-10-17"
+            Statement: 
+              - Effect: "Allow"
+                Action:
+                  - "mobileanalytics:PutEvents"
+                  - "cognito-sync:*"
+                  - "cognito-identity:*"
+                Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - 'execute-api:Invoke'
+                Resource:
+                  Fn::Join:
+                    - ''
+                    -
+                      - 'arn:aws:execute-api:'
+                      - Ref: AWS::Region
+                      - ':'
+                      - Ref: AWS::AccountId
+                      - ':'                      
+                      - '/*'
+  
+  JiraOpsIdentityPoolRoleMapping:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref JiraOpsIdentityPool
+      Roles:
+        authenticated: !GetAtt JiraOpsCognitoAuthorizedRole.Arn        
