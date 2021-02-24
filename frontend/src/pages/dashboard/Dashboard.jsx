@@ -18,6 +18,7 @@ import MenuOption                 from "../dashboard/components/MenuOption";
 import logo                       from "../../images/logo.6c8e5727.svg";
 import                                 "./Dashboard.css";
 import Copyright                  from "../../components/Copyright"
+//import About                      from "../about/About";
 
 const drawerWidth = 240;
 
