@@ -1,0 +1,16 @@
+service: infrastructure
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  JiraOpsUserPoolName: ${self:custom.stage}-jira-ops-user-pool
+  JiraOpsUserPoolClientName: ${self:custom.stage}-jira-ops-user-pool-client
+  JiraOpsIdentityPoolName: ${self:custom.stage}-jira-ops-identity-pool
+
+provider:
+  name: aws  
+  region: eu-west-2
+  profile: glasswall  
+  
+resources:
+  - ${file(cognito/user-pool.yml)}
+  - ${file(cognito/identity-pool.yml)}
