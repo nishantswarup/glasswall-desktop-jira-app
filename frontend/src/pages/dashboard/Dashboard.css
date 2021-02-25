@@ -59,4 +59,9 @@ button.btn.btn-primary.dropdown-toggle {
   border: none;
   padding: 0;
 }
-
+a.makeStyles-nav_link-42.active {
+  color: #43acff;
+}
+a.makeStyles-nav_link-42.active svg.MuiSvgIcon-root {
+  fill: #43acff !important;
+}

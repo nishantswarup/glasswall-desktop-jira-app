@@ -1,6 +1,7 @@
 import React          from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField      from "@material-ui/core/TextField";
+import { useForm }                 from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   form_controled: {
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NameInputFeild = () => {
+
+  const { register } = useForm(); 
+
   const classes = useStyles();
 
   return (
@@ -31,6 +35,7 @@ const NameInputFeild = () => {
         label="default-administrator"
         variant="filled"
         className={classes.form_controled}
+        name="username" defaultValue="raj.mb.coderx@gmail.com" ref={register}
       />
     </>
   );

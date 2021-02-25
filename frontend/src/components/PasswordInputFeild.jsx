@@ -1,8 +1,10 @@
 import React          from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField      from "@material-ui/core/TextField";
+import { useForm }                 from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
+  
   form_controled: {
     width: "100%",
     paddingLeft: "40px",
@@ -22,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PasswordInputFeild = () => {
+
+  const { register } = useForm(); 
+
   const classes = useStyles();
 
   return (
@@ -33,6 +38,7 @@ const PasswordInputFeild = () => {
         autoComplete="current-password"
         variant="filled"
         className={classes.form_controled}
+        name="password" defaultValue="Sanchi#4321" ref={register}
       />
     </>
   );

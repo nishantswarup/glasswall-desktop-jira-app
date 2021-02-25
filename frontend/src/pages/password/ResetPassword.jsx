@@ -19,10 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     position: "relative",
-    margin: "0px auto 70px",
+    margin: "0px auto 0px",
     textAlign: "center",
     background:
       "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    display: "none",
   },
   companyLogo: {
     width: "170px",
@@ -38,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
   form_box: {
     padding: "0px",
     boxShadow: "0px 0px 9px 4px rgb(255 255 255 / 20%)",
-    borderRadius: "6px",
-    width: "860px",
+    borderRadius: "0px",
+    width: "100%",
     background: "#fff",
   },
 
@@ -57,7 +58,8 @@ const useStyles = makeStyles((theme) => ({
       "& .MuiInputBase-root": {
         background: "#fff",
         border: "1px solid #acacac",
-      }
+        borderBottom: "none",
+      },
     },
   },
 
@@ -89,21 +91,22 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
     padding: "0px",
     width: "50%",
-    minHeight: "55vh",
+    minHeight: "94vh",
   },
   form_right: {
     float: "right",
     padding: "0px",
     width: "50%",
     background: "#fff",
-    minHeight: "55vh",
+    minHeight: "94vh",
   },
   clearfix: {
     clear: "both",
   },
   form_inner_l: {
-    padding: "60px 50px",
+    padding: "9rem 10rem",
     color: "#fff",
+    position: "relative",
     "& p": {
       lineHeight: "24px",
     },
@@ -114,7 +117,8 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: theme.spacing(3, 0, 2),
     width: "100%",
-    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    background:
+      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
     color: "#ffffff",
   },
   form_heading: {
@@ -127,23 +131,30 @@ const useStyles = makeStyles((theme) => ({
   form_heading_left: {
     color: "#fff",
     fontSize: "27px",
+    marginTop: "0",
   },
   footer: {
-    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
-    color:"#fff",
+    background: "#0c3451",
+    color: "#fff",
     padding: "10px 10px",
     textAlign: "center",
-    margin: "0 0 0 0", 
+    margin: "0 0 0 0",
     position: "fixed",
     bottom: "0",
     width: "100%",
-
+    height: "6vh",
   },
   companyLogos: {
     width: "100px",
-    position: "relative",
-    top:"-20px",
-    margin: "0 0 -40px",
+    position: "absolute",
+    top: "50px",
+    margin: "0 0 0px",
+    right: "-75px",
+    border: "8px solid #fff",
+    boxShadow: "2px 2px 4px #333",
+    padding: "40px 20px",
+    borderRadius: "100px",
+    background: "#0c3451",
   },
 }));
 
@@ -155,7 +166,7 @@ const ResetPassword = () => {
 
   return (
     <>
-    <div className={classes.main_wrapper}>
+      <div className={classes.main_wrapper}>
         <div className={classes.logo}>
           <img src={logo} alt="Logo" className={classes.companyLogo} />
         </div>
@@ -163,7 +174,7 @@ const ResetPassword = () => {
           <div className={classes.form_box}>
             <div className={classes.form_left}>
               <div className={classes.form_inner_l}>
-              <img src={logo} alt="Logo" className={classes.companyLogos} />
+                <img src={logo} alt="Logo" className={classes.companyLogos} />
                 <h3 className={classes.form_heading_left}>
                   Glasswall Desktop Jira
                 </h3>
@@ -179,24 +190,23 @@ const ResetPassword = () => {
               <div className={classes.form_inner_l}>
                 <h3 className={classes.form_heading}>Reset Password</h3>
                 <form autocomplete="off">
-              <div className={classes.form_group}>
-                <MailOutlineIcon className={classes.svg_icon} />
-                <EmailInputFeild />
-              </div>
-              <Button
-                className={classes.button}
-                variant="contained"
-                color="primary"
-                type="submit"
-                value="Submit"
-                
-              >
-                Submit
-              </Button>
-              <a onClick={navigateTo} className={classes.forgottenPassword}>
-              Already have an account? Log In
-              </a>
-            </form>
+                  <div className={classes.form_group}>
+                    <MailOutlineIcon className={classes.svg_icon} />
+                    <EmailInputFeild />
+                  </div>
+                  <Button
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    value="Submit"
+                  >
+                    Submit
+                  </Button>
+                  <a onClick={navigateTo} className={classes.forgottenPassword}>
+                    Already have an account? Log In
+                  </a>
+                </form>
               </div>
             </div>
             <div className={classes.clearfix}></div>

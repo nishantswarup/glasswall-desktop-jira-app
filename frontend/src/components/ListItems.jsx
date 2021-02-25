@@ -4,8 +4,8 @@ import ListItemIcon            from "@material-ui/core/ListItemIcon";
 import DashboardOutlinedIcon   from '@material-ui/icons/DashboardOutlined';
 import InfoOutlinedIcon        from '@material-ui/icons/InfoOutlined';
 import TableChartIcon          from '@material-ui/icons/TableChart';
-import GroupOutlinedIcon       from '@material-ui/icons/GroupOutlined';
-import ContactMailOutlinedIcon from '@material-ui/icons/ContactMailOutlined';
+import AppsIcon                from '@material-ui/icons/Apps';
+import SettingsIcon            from '@material-ui/icons/Settings';
 import { makeStyles }          from "@material-ui/core/styles";
 
 
@@ -25,10 +25,11 @@ const useStyles = makeStyles((theme) => ({
   nav_link: {
     padding: "15px 0px 13px",
     textDecoration: "none",
-    fontSize: "15px",
-    letterSpacing: ".02em",
+    fontSize: "14px",
+    letterSpacing: ".04em",
     color: "#ffffff",
     display: "block",
+    textTransform: "uppercase",
   },
   icon_cover: {
     display: "inline-block",
@@ -46,16 +47,36 @@ const ListItems = () => {
       <div>
         <ul className={classes.navbar_nav}>
           <li className={classes.nav_item}>
-            <NavLink
-              exact
-              className={classes.nav_link}
-              aria-current="page"
-              to="/"
-            >
+            <NavLink exact className={classes.nav_link} to="/">
               <ListItemIcon className={classes.icon_cover}>
                 <DashboardOutlinedIcon />
               </ListItemIcon>
               Home
+            </NavLink>
+          </li>
+          <li className={classes.nav_item}>
+            <NavLink className={classes.nav_link} to="/jira">
+              <ListItemIcon className={classes.icon_cover}>
+                <AppsIcon />
+              </ListItemIcon>
+              JIRA
+            </NavLink>
+          </li>
+        
+          {/* <li className={classes.nav_item}>
+            <NavLink className={classes.nav_link} to="/tables">
+              <ListItemIcon className={classes.icon_cover}>
+                <TableChartIcon />
+              </ListItemIcon>
+              User Table
+            </NavLink>
+          </li> */}
+          <li className={classes.nav_item}>
+            <NavLink className={classes.nav_link} to="/settings">
+              <ListItemIcon className={classes.icon_cover}>
+                <SettingsIcon />
+              </ListItemIcon>
+              Settings
             </NavLink>
           </li>
           <li className={classes.nav_item}>
@@ -64,30 +85,6 @@ const ListItems = () => {
                 <InfoOutlinedIcon />
               </ListItemIcon>
               About
-            </NavLink>
-          </li>
-          <li className={classes.nav_item}>
-            <NavLink className={classes.nav_link} to="/tables">
-              <ListItemIcon className={classes.icon_cover}>
-                <TableChartIcon />
-              </ListItemIcon>
-              User Table
-            </NavLink>
-          </li>
-          <li className={classes.nav_item}>
-            <NavLink className={classes.nav_link} to="">
-              <ListItemIcon className={classes.icon_cover}>
-                <GroupOutlinedIcon />
-              </ListItemIcon>
-              Team
-            </NavLink>
-          </li>
-          <li className={classes.nav_item}>
-            <NavLink className={classes.nav_link} to="#">
-              <ListItemIcon className={classes.icon_cover}>
-                <ContactMailOutlinedIcon />
-              </ListItemIcon>
-              Contact
             </NavLink>
           </li>
         </ul>

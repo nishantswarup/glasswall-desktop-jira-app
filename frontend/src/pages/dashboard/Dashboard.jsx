@@ -102,8 +102,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -112,7 +110,6 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
 
   return (
     <div className={classes.root}>
@@ -140,10 +137,9 @@ export default function Dashboard() {
             color="inherit"
             noWrap
             className={classes.title}
-          >
-          </Typography>
+          ></Typography>
 
-          <MenuOption/>
+          <MenuOption />
         </Toolbar>
       </AppBar>
       <Drawer
@@ -160,7 +156,9 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List><ListItems /></List>
+        <List>
+          <ListItems />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

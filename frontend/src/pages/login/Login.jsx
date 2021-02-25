@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { useHistory }                 from "react-router-dom";
-import PersonOutlineOutlinedIcon      from "@material-ui/icons/PersonOutlineOutlined";
-import VpnKeyOutlinedIcon             from "@material-ui/icons/VpnKeyOutlined";
-import Button                         from "@material-ui/core/Button";
-import Link                           from "@material-ui/core/Link";
-import logo                           from "../../images/logo.6c8e5727.svg";
-import { makeStyles }                 from "@material-ui/core/styles";
-import { Auth }                       from 'aws-amplify';
-import { useForm }                    from 'react-hook-form';
+import { useHistory }              from "react-router-dom";
+import PersonOutlineOutlinedIcon   from "@material-ui/icons/PersonOutlineOutlined";
+import VpnKeyOutlinedIcon          from "@material-ui/icons/VpnKeyOutlined";
+import Button                      from "@material-ui/core/Button";
+import Link                        from "@material-ui/core/Link";
+import logo                        from "../../images/logo.6c8e5727.svg";
+import PasswordInputFeild          from "../../components/PasswordInputFeild";
+import NameInputFeild              from "../../components/NameInputFeild";
+import { makeStyles }              from "@material-ui/core/styles";
+import { Auth }                    from 'aws-amplify';
+import { useForm }                 from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   main_wrapper: {
@@ -21,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     position: "relative",
-    margin: "0px auto 70px",
+    margin: "0px auto 0px",
     textAlign: "center",
     background:
       "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    display: "none",
   },
   companyLogo: {
     width: "170px",
@@ -40,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
   form_box: {
     padding: "0px",
     boxShadow: "0px 0px 9px 4px rgb(255 255 255 / 20%)",
-    borderRadius: "6px",
-    width: "860px",
+    borderRadius: "0px",
+    width: "100%",
     background: "#fff",
   },
 
@@ -59,7 +62,8 @@ const useStyles = makeStyles((theme) => ({
       "& .MuiInputBase-root": {
         background: "#fff",
         border: "1px solid #acacac",
-      }
+        borderBottom: "none",
+      },
     },
   },
 
@@ -91,21 +95,22 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
     padding: "0px",
     width: "50%",
-    minHeight: "55vh",
+    minHeight: "94vh",
   },
   form_right: {
     float: "right",
     padding: "0px",
     width: "50%",
     background: "#fff",
-    minHeight: "55vh",
+    minHeight: "94vh",
   },
   clearfix: {
     clear: "both",
   },
   form_inner_l: {
-    padding: "60px 50px",
+    padding: "12rem 10rem",
     color: "#fff",
+    position: "relative",
     "& p": {
       lineHeight: "24px",
     },
@@ -116,7 +121,8 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: theme.spacing(3, 0, 0),
     width: "100%",
-    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    background:
+      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
     color: "#ffffff",
   },
   form_heading: {
@@ -129,23 +135,30 @@ const useStyles = makeStyles((theme) => ({
   form_heading_left: {
     color: "#fff",
     fontSize: "27px",
+    marginTop: "0",
   },
   footer: {
-    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
-    color:"#fff",
+    background: "#0c3451",
+    color: "#fff",
     padding: "10px 10px",
     textAlign: "center",
-    margin: "0 0 0 0", 
+    margin: "0 0 0 0",
     position: "fixed",
     bottom: "0",
     width: "100%",
-
+    height: "6vh",
   },
   companyLogos: {
     width: "100px",
-    position: "relative",
-    top:"-20px",
-    margin: "0 0 -40px",
+    position: "absolute",
+    top: "50px",
+    margin: "0 0 0px",
+    right: "-75px",
+    border: "8px solid #fff",
+    boxShadow: "2px 2px 4px #333",
+    padding: "40px 20px",
+    borderRadius: "100px",
+    background: "#0c3451",
   },
 }));
 
@@ -206,7 +219,6 @@ const Login = () => {
 
 
 
-
   return (
     <>
       <div className={classes.main_wrapper}>
@@ -217,7 +229,7 @@ const Login = () => {
           <div className={classes.form_box}>
             <div className={classes.form_left}>
               <div className={classes.form_inner_l}>
-              <img src={logo} alt="Logo" className={classes.companyLogos} />
+                <img src={logo} alt="Logo" className={classes.companyLogos} />
                 <h3 className={classes.form_heading_left}>
                   Glasswall Desktop Jira
                 </h3>
@@ -235,12 +247,12 @@ const Login = () => {
                 <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                   <div className={classes.form_group}>
                     <PersonOutlineOutlinedIcon className={classes.svg_icon} />
-                    <input name="username" defaultValue="raj.mb.coderx@gmail.com" ref={register}/>
+                    <input name="username" defaultValue="raj.mb.coderx@gmail.com" ref={register({ required: true })}/>
                     {errors.username && 'Username is required.'}
                   </div>
                   <div className={classes.form_group}>
                     <VpnKeyOutlinedIcon className={classes.svg_icon} />
-                    <input name="password" defaultValue="Sanchi#4321" ref={register}/>
+                    <input name="password" defaultValue="Sanchi#4321" ref={register({ required: true })}/>
                     {errors.password && 'password is required.'}
                   </div>
                   <Link
