@@ -1,18 +1,27 @@
 import React                      from "react";
-import Typography                  from "@material-ui/core/Typography";
-import Link                       from "@material-ui/core/Link";
+import { makeStyles }              from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  copyright: {
+    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    color:"#fff",
+    padding: "5px 10px",
+    textAlign: "center",
+    left: "0px",
+    margin: "0 0 0 0", 
+    position: "fixed",
+    bottom: "0",
+    width: "100%",
+  },
+}));
 
 const Copyright =() => {
+  const classes = useStyles();
 return(
 <>
-<Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
+<div className={classes.copyright}>
+<p>© 2021 copyright. All right reserved</p>
+    </div>
 </>
 );
 }

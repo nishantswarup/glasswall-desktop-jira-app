@@ -1,13 +1,13 @@
-import React                       from "react";
-import { useHistory }              from "react-router-dom";
-import PersonOutlineOutlinedIcon   from "@material-ui/icons/PersonOutlineOutlined";
-import VpnKeyOutlinedIcon          from "@material-ui/icons/VpnKeyOutlined";
-import Button                      from "@material-ui/core/Button";
-import Link                        from "@material-ui/core/Link";
-import logo                        from "../../images/logo.6c8e5727.svg";
-import PasswordInputFeild          from "../../components/PasswordInputFeild";
-import NameInputFeild              from "../../components/NameInputFeild";
-import { makeStyles }              from "@material-ui/core/styles";
+import React, { useState, useEffect } from "react";
+import { useHistory }                 from "react-router-dom";
+import PersonOutlineOutlinedIcon      from "@material-ui/icons/PersonOutlineOutlined";
+import VpnKeyOutlinedIcon             from "@material-ui/icons/VpnKeyOutlined";
+import Button                         from "@material-ui/core/Button";
+import Link                           from "@material-ui/core/Link";
+import logo                           from "../../images/logo.6c8e5727.svg";
+import { makeStyles }                 from "@material-ui/core/styles";
+import { Auth }                       from 'aws-amplify';
+import { useForm }                    from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   main_wrapper: {
@@ -151,10 +151,61 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
+  const [loading , setLoading] = useState(false);
+  const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
   const history = useHistory();
-  const navigateTo = () => history.push("/dashboard");
+  const navigateToDashboard = () => history.push("/dashboard");
   const navigatesTo = () => history.push("/resetpassword");
+
+  useEffect(() => {
+    currentUser()
+  },[]);
+
+
+  const currentUser=async()=>{
+    let user = await Auth.currentAuthenticatedUser();
+    if(user){
+      navigateToDashboard();
+    }
+  }
+
+  
+
+  
+  const onSubmit = (values) => {
+    let { username, password } = values;
+
+    setLoading(true);
+
+    Auth.signIn(username, password)
+      .then(user => {
+        console.log(user)
+        if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+          Auth.completeNewPassword(
+              user,               // the Cognito User Object
+              password,       // the new password
+          ).then(user => {
+              // at this time the user is logged in if no MFA required
+              console.log(user);
+              navigateToDashboard();
+          }).catch(e => {
+            console.log(e);
+          });
+      } else {
+        navigateToDashboard();
+      }
+       
+      })
+      .catch(err => {
+        console.log(err);
+
+        setLoading(false);
+      });
+  };
+
+
+
 
   return (
     <>
@@ -181,14 +232,16 @@ const Login = () => {
             <div className={classes.form_right}>
               <div className={classes.form_inner_l}>
                 <h3 className={classes.form_heading}>Login Account</h3>
-                <form autocomplete="off">
+                <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                   <div className={classes.form_group}>
                     <PersonOutlineOutlinedIcon className={classes.svg_icon} />
-                    <NameInputFeild />
+                    <input name="username" defaultValue="raj.mb.coderx@gmail.com" ref={register}/>
+                    {errors.username && 'Username is required.'}
                   </div>
                   <div className={classes.form_group}>
                     <VpnKeyOutlinedIcon className={classes.svg_icon} />
-                    <PasswordInputFeild />
+                    <input name="password" defaultValue="Sanchi#4321" ref={register}/>
+                    {errors.password && 'password is required.'}
                   </div>
                   <Link
                     to="/resetpassword"
@@ -203,7 +256,6 @@ const Login = () => {
                     color="primary"
                     type="submit"
                     value="Log In"
-                    onClick={navigateTo}
                   >
                     Log In
                   </Button>
