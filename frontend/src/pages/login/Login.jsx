@@ -70,9 +70,9 @@ const useStyles = makeStyles((theme) => ({
   svg_icon: {
     position: "absolute",
     padding: "0 0",
-    top: "15px",
+    top: "9px",
     left: "10px",
-    fill: "#000 !important",
+    fill: "#858585 !important",
     zIndex: "11",
   },
 
@@ -159,6 +159,17 @@ const useStyles = makeStyles((theme) => ({
     padding: "40px 20px",
     borderRadius: "100px",
     background: "#0c3451",
+  },
+  form_control: {
+    width: "100%",
+    height: "40px",
+    textIndent: "40px",
+    borderRadius: "6px",
+    border: "1px solid #bbb",
+    fontSize: "14px",
+  },
+  error: {
+    color: "red",
   },
 }));
 
@@ -247,13 +258,13 @@ const Login = () => {
                 <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                   <div className={classes.form_group}>
                     <PersonOutlineOutlinedIcon className={classes.svg_icon} />
-                    <input name="username" defaultValue="raj.mb.coderx@gmail.com" ref={register({ required: true })}/>
-                    {errors.username && 'Username is required.'}
+                    <input className={classes.form_control} placeHolder="username" name="username" ref={register({ required: true })}/>
+                    <div className={classes.error}>{errors.username && 'Username is required.'}</div>
                   </div>
                   <div className={classes.form_group}>
                     <VpnKeyOutlinedIcon className={classes.svg_icon} />
-                    <input name="password" defaultValue="Sanchi#4321" ref={register({ required: true })}/>
-                    {errors.password && 'password is required.'}
+                    <input className={classes.form_control} placeHolder="password" name="password"  ref={register({ required: true })}/>
+                    <div className={classes.error}>{errors.password && 'password is required.'}</div>
                   </div>
                   <Link
                     to="/resetpassword"
