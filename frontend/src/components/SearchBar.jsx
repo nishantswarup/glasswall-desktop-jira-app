@@ -1,10 +1,8 @@
 import React          from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField      from "@material-ui/core/TextField";
-import { useForm }                 from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
-  
   form_controled: {
     width: "100%",
     paddingLeft: "40px",
@@ -15,33 +13,35 @@ const useStyles = makeStyles((theme) => ({
       color: "#000",
       left: "30px !important",
       width: "100%",
+      background: "transparent",
+    },
+    "& .MuiFilledInput-root":{
+    background: "transparent",
+    width: "100%",
     },
     "& .MuiFilledInput-input": {
       color: "#000",
       paddingLeft: "40px",
+      background: "transparent",
     },
   },
 }));
 
-const PasswordInputFeild = () => {
-
-  const { register } = useForm(); 
+const SearcBar = () => {
 
   const classes = useStyles();
 
   return (
     <>
       <TextField
-        id="filled-password-input"
-        label="Password"
-        type="password"
-        autoComplete="current-password"
+        id="filled-helperText"
+        label="Search"
         variant="filled"
         className={classes.form_controled}
-        name="password" defaultValue="Sanchi#4321" ref={register}
+        
       />
     </>
   );
 };
 
-export default PasswordInputFeild;
+export default SearcBar;

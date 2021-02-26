@@ -3,9 +3,9 @@ import { NavLink }             from "react-router-dom";
 import ListItemIcon            from "@material-ui/core/ListItemIcon";
 import DashboardOutlinedIcon   from '@material-ui/icons/DashboardOutlined';
 import InfoOutlinedIcon        from '@material-ui/icons/InfoOutlined';
-import TableChartIcon          from '@material-ui/icons/TableChart';
-import GroupOutlinedIcon       from '@material-ui/icons/GroupOutlined';
-import ContactMailOutlinedIcon from '@material-ui/icons/ContactMailOutlined';
+import ListItem                from '@material-ui/core/ListItem';
+import AppsIcon                from '@material-ui/icons/Apps';
+import SettingsIcon            from '@material-ui/icons/Settings';
 import { makeStyles }          from "@material-ui/core/styles";
 
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   nav_item: {
     display: "block",
     padding: "0px 20px",
-    borderBottom: "1px solid #eeeeee",
+    //borderBottom: "1px solid #eeeeee",
     " :hover": {
       backgroundColor: "#333",
     },
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
   nav_link: {
     padding: "15px 0px 13px",
     textDecoration: "none",
-    fontSize: "15px",
-    letterSpacing: ".02em",
+    fontSize: "16px",
+    fontWeight: "500",
     color: "#ffffff",
     display: "block",
   },
@@ -45,51 +45,47 @@ const ListItems = () => {
     <>
       <div>
         <ul className={classes.navbar_nav}>
-          <li className={classes.nav_item}>
-            <NavLink
-              exact
-              className={classes.nav_link}
-              aria-current="page"
-              to="/"
-            >
+          <ListItem button className={classes.nav_item}>
+            <NavLink exact className={classes.nav_link} to="/">
               <ListItemIcon className={classes.icon_cover}>
                 <DashboardOutlinedIcon />
               </ListItemIcon>
               Home
             </NavLink>
-          </li>
-          <li className={classes.nav_item}>
-            <NavLink className={classes.nav_link} to="/about">
+          </ListItem>
+          <ListItem button className={classes.nav_item}>
+            <NavLink className={classes.nav_link} to="/jira">
               <ListItemIcon className={classes.icon_cover}>
-                <InfoOutlinedIcon />
+                <AppsIcon />
               </ListItemIcon>
-              About
+              JIRA
             </NavLink>
-          </li>
-          <li className={classes.nav_item}>
+          </ListItem>
+        
+          {/* <ListItem button className={classes.nav_item}>
             <NavLink className={classes.nav_link} to="/tables">
               <ListItemIcon className={classes.icon_cover}>
                 <TableChartIcon />
               </ListItemIcon>
               User Table
             </NavLink>
-          </li>
-          <li className={classes.nav_item}>
-            <NavLink className={classes.nav_link} to="">
+          </ListItem> */}
+          <ListItem button className={classes.nav_item}>
+            <NavLink className={classes.nav_link} to="/settings">
               <ListItemIcon className={classes.icon_cover}>
-                <GroupOutlinedIcon />
+                <SettingsIcon />
               </ListItemIcon>
-              Team
+              Settings
             </NavLink>
-          </li>
-          <li className={classes.nav_item}>
-            <NavLink className={classes.nav_link} to="#">
+          </ListItem>
+          <ListItem button className={classes.nav_item}>
+            <NavLink className={classes.nav_link} to="/about">
               <ListItemIcon className={classes.icon_cover}>
-                <ContactMailOutlinedIcon />
+                <InfoOutlinedIcon />
               </ListItemIcon>
-              Contact
+              About
             </NavLink>
-          </li>
+          </ListItem>
         </ul>
       </div>
     </>

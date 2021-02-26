@@ -21,12 +21,20 @@ img.companyLogoinner {
   left: 15px;
   top: 3px;
 }
-.MuiPaper-root {
+.MuiDrawer-paperAnchorLeft {
   color: #fff !important;
   transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  background-color: rgba(12,52,81,1) ;
-  background: -webkit-linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(12,52,81,1) 100%);
-  background: linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(12,52,81,1) 100%);
+  background: #000428; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom,
+    #004e92,
+    #000428
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom,
+    #004e92,
+    #000428
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .MuiDrawer-docked .MuiSvgIcon-root {
   fill: #fff !important;
@@ -59,4 +67,41 @@ button.btn.btn-primary.dropdown-toggle {
   border: none;
   padding: 0;
 }
+ul div a.active {
+  color: #43acff;
+}
+ul div a.active svg.MuiSvgIcon-root {
+  fill: #43acff !important;
+}
 
+main {
+  background: #f4f5fd;
+}
+.makeStyles-toolbar-2,
+.MuiToolbar-regular {
+  background: hsla(0, 0%, 100%, 0.95) !important;
+  color: #000;
+}
+.MuiPaper-root.MuiMenu-paper.MuiPopover-paper.MuiPaper-elevation8.MuiPaper-rounded {
+  min-width: 15rem;
+}
+ul.MuiList-root.MuiMenu-list.MuiList-padding {
+  background: #000428; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to top,
+    #004e92,
+    #000428
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to top,
+    #004e92,
+    #000428
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.info_ul:last-child {
+  margin-bottom: 0 !important;
+}
+.MuiCardContent-root,
+.MuiFormControl-root.MuiTextField-root {
+  width: 100%;
+}

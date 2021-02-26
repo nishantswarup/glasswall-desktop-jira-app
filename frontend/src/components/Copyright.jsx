@@ -1,29 +1,36 @@
-import React                      from "react";
+import React                       from "react";
 import { makeStyles }              from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   copyright: {
-    background: "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
-    color:"#fff",
+    background: "#ffffff",
+    color: "#555",
     padding: "5px 10px",
     textAlign: "center",
     left: "0px",
-    margin: "0 0 0 0", 
+    margin: "0 0 0 0",
     position: "fixed",
     bottom: "0",
     width: "100%",
   },
+  red_heart: {
+    color: "#fe3030",
+  },
+  company_link: {
+    textDecoration: "none",
+    color: "#000",
+  },
 }));
 
-const Copyright =() => {
+const Copyright = () => {
   const classes = useStyles();
-return(
-<>
-<div className={classes.copyright}>
-<p>© 2021 copyright. All right reserved</p>
-    </div>
-</>
-);
-}
+  return (
+    <>
+      <div className={classes.copyright}>
+        <p>© Copyright 2021 - Glasswall Solutions Ltd. All Rights Reserved.</p>
+      </div>
+    </>
+  );
+};
 
 export default Copyright;

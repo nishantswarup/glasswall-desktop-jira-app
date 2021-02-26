@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function About() {
+export default function Jira() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -79,7 +79,7 @@ export default function About() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <h2>ABOUT US</h2>
+          <h2>JIRA</h2>
           <Box pt={4}>
             <Copyright />
           </Box>

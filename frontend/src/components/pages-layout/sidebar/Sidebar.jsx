@@ -108,7 +108,7 @@ const Sidebar = () => {
 
   return (
     <>
-    <AppBar
+      <AppBar
         position="absolute"
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >

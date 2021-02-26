@@ -1,4 +1,6 @@
 import React                      from 'react';
+import {useState, useEffect}      from 'react'
+import axios                      from 'axios'
 import { makeStyles, useTheme }   from '@material-ui/core/styles';
 import PropTypes                  from 'prop-types';
 import Table                      from '@material-ui/core/Table';
@@ -18,10 +20,14 @@ import LastPageIcon               from '@material-ui/icons/LastPage';
 import CssBaseline                from "@material-ui/core/CssBaseline";
 import Box                        from "@material-ui/core/Box";
 import Container                  from "@material-ui/core/Container";
+import Card                       from '@material-ui/core/Card';
+import CardContent                from '@material-ui/core/CardContent';
+import SearchIcon                 from '@material-ui/icons/Search';
 import                                 "../dashboard/Dashboard.css";
 import Copyright                  from "../../components/Copyright";
 import Header                     from "../../components/pages-layout/header/Header";
 import Sidebar                    from "../../components/pages-layout/sidebar/Sidebar";
+import SearchBar                  from "../../components/SearchBar"; 
 
 
 
@@ -102,8 +108,6 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -132,53 +136,55 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
   },
   theader: {
-    background: "#0d3552",
-    "& tr":{
-      "& th":{
+    background: "#000428",
+    background: "-webkit-linear-gradient(to right, #004e92, #000428)",
+    background: "linear-gradient(to right, #004e92, #000428)",
+    "& tr": {
+      "& th": {
         color: "#fff",
         fontWeight: "600",
-      }
-    }
+      },
+    },
   },
   table: {
     marginBottom: "25px",
     boxShadow: "2px 1px 9px #ccc",
     background: "#fff",
   },
-
+  card_box: {
+    marginBottom: "1em",
+  },
+  form_group: {
+    position: "relative",
+    width: "360px",
+    "& .MuiFormControl-root": {
+      width: "100%",
+    },
+  },
+  search_icon: {
+    position: "absolute",
+    top: "17px",
+    left: "8px",
+    zIndex: "1",
+  },
 }));
 
+const CustomizedTables = () => {
+  const url = "https://jsonplaceholder.typicode.com/users";
 
+  const [data, setData] = useState([]);
 
+  useEffect(() => {
+    const users = axios.get(url).then((json) => setData(json.data));
+  }, []);
 
-
-
-function createData(id, issue, assignee, description) {
-  return { id, issue, assignee, description };
-}
-
-const rows = [
-  createData(1, "Not Working", "Abhishek", "Will fix it asap."),
-  createData(2, "Not Opening", "Anish", "Will fix it asap."),
-  createData(3, "Auto Closing", "Abhishek", "Will fix it asap."),
-  createData(4, "Not Working", "Amit", "Will fix it asap."),
-  createData(5, "Not Working", "Sanchit", "Will fix it asap."),
-  createData(6, "Not Working", "Sunil", "Will fix it asap."),
-  createData(7, "Not Opening", "Amrit", "Will fix it asap."),
-  createData(8, "Auto Closing", "Kalyan", "Will fix it asap."),
-  createData(9, "Not Working", "Dinesh", "Will fix it asap."),
-  createData(10, "Not Working", "Pritam", "Will fix it asap."),
-];
-
-export default function CustomizedTables() {
   const classes = useStyles();
-  
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -197,39 +203,53 @@ export default function CustomizedTables() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          <Card className={classes.card_box}>
+            <CardContent>
+              <div className={classes.form_group}>
+                <SearchIcon className={classes.search_icon} />
+                <SearchBar />
+              </div>
+            </CardContent>
+          </Card>
           <TableContainer>
-            <Table className={classes.table}
-              aria-label="custom pagination table">
+            <Table
+              className={classes.table}
+              aria-label="custom pagination table"
+            >
               <TableHead className={classes.theader}>
                 <TableRow>
                   <TableCell>
-                    Jira ID
+                    ID
                     <TableSortLabel />
                   </TableCell>
-                  <TableCell>Issue </TableCell>
+                  <TableCell>Name </TableCell>
                   <TableCell>
-                    Assignee
+                    Username
                     <TableSortLabel />
                   </TableCell>
                   <TableCell>
-                    Description
+                    Email
                     <TableSortLabel />
                   </TableCell>
+                  <TableCell>Address</TableCell>
+                  <TableCell>Zip Code</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {(rowsPerPage > 0
-                  ? rows.slice(
+                  ? data.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                  : rows
+                  : data
                 ).map((row) => (
-                  <TableRow className={classes.tableRow} hover key={row.id}>
+                  <TableRow className={classes.tableRow} hover key={row.name}>
                     <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.assignee}</TableCell>
-                    <TableCell>{row.description}</TableCell>
-                    <TableCell>{row.issue}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{row.username}</TableCell>
+                    <TableCell>{row.email}</TableCell>
+                    <TableCell>{row.address.city}</TableCell>
+                    <TableCell>{row.address.zipcode}</TableCell>
                   </TableRow>
                 ))}
 
@@ -241,7 +261,8 @@ export default function CustomizedTables() {
               </TableBody>
               <TableFooter>
                 <TableRow>
-                  <TablePagination className={classes.paginationdiv}
+                  <TablePagination
+                    className={classes.paginationdiv}
                     rowsPerPageOptions={[
                       5,
                       10,
@@ -249,7 +270,7 @@ export default function CustomizedTables() {
                       { label: "All", value: -1 },
                     ]}
                     colSpan={6}
-                    count={rows.length}
+                    count={data.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     SelectProps={{
@@ -271,4 +292,6 @@ export default function CustomizedTables() {
       </main>
     </div>
   );
-}
+};
+
+export default CustomizedTables;
