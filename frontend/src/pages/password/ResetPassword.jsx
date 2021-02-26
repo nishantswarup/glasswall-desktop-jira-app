@@ -87,24 +87,25 @@ const useStyles = makeStyles((theme) => ({
 
   form_left: {
     float: "left",
-    background:
-      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to bottom, #004e92, #000428)",
+    background: "linear-gradient(to bottom, #004e92, #000428)",
     padding: "0px",
     width: "50%",
-    minHeight: "94vh",
+    minHeight: "100vh",
   },
   form_right: {
     float: "right",
     padding: "0px",
     width: "50%",
     background: "#fff",
-    minHeight: "94vh",
+    minHeight: "100vh",
   },
   clearfix: {
     clear: "both",
   },
   form_inner_l: {
-    padding: "9rem 10rem",
+    padding: "12rem 10rem",
     color: "#fff",
     position: "relative",
     "& p": {
@@ -117,8 +118,9 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: theme.spacing(3, 0, 2),
     width: "100%",
-    background:
-      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to right, #004e92, #000428)",
+    background: "linear-gradient(to right, #004e92, #000428)",
     color: "#ffffff",
   },
   form_heading: {
@@ -134,15 +136,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0",
   },
   footer: {
-    background: "#0c3451",
     color: "#fff",
     padding: "10px 10px",
-    textAlign: "center",
+    textAlign: "left",
     margin: "0 0 0 0",
     position: "fixed",
-    bottom: "0",
-    width: "100%",
-    height: "6vh",
+    bottom: "20px",
+    left: "10rem",
   },
   companyLogos: {
     width: "100px",
@@ -154,7 +154,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 2px 4px #333",
     padding: "40px 20px",
     borderRadius: "100px",
-    background: "#0c3451",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to right, #004e92, #000428)",
+    background: "linear-gradient(to right, #004e92, #000428)",
+    zIndex: "1",
   },
 }));
 
@@ -184,6 +187,9 @@ const ResetPassword = () => {
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                   laboris nisi ut aliquip ex ea commodo consequat.{" "}
                 </p>
+                <div className={classes.footer}>
+                  <p>© 2021 copyright. All right reserved</p>
+                </div>
               </div>
             </div>
             <div className={classes.form_right}>
@@ -211,9 +217,6 @@ const ResetPassword = () => {
             </div>
             <div className={classes.clearfix}></div>
           </div>
-        </div>
-        <div className={classes.footer}>
-          <p>© 2021 copyright. All right reserved</p>
         </div>
       </div>
     </>

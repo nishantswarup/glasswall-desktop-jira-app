@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useHistory }              from "react-router-dom";
-import PersonOutlineOutlinedIcon   from "@material-ui/icons/PersonOutlineOutlined";
-import VpnKeyOutlinedIcon          from "@material-ui/icons/VpnKeyOutlined";
-import Button                      from "@material-ui/core/Button";
-import Link                        from "@material-ui/core/Link";
-import logo                        from "../../images/logo.6c8e5727.svg";
-import PasswordInputFeild          from "../../components/PasswordInputFeild";
-import NameInputFeild              from "../../components/NameInputFeild";
-import { makeStyles }              from "@material-ui/core/styles";
-import { Auth }                    from 'aws-amplify';
-import { useForm }                 from 'react-hook-form';
+import { useHistory }                 from "react-router-dom";
+import PersonOutlineOutlinedIcon      from "@material-ui/icons/PersonOutlineOutlined";
+import VpnKeyOutlinedIcon             from "@material-ui/icons/VpnKeyOutlined";
+import Button                         from "@material-ui/core/Button";
+import Link                           from "@material-ui/core/Link";
+import logo                           from "../../images/logo.6c8e5727.svg";
+import { makeStyles }                 from "@material-ui/core/styles";
+import { Auth }                       from 'aws-amplify';
+import { useForm }                    from 'react-hook-form';
 
 const useStyles = makeStyles((theme) => ({
   main_wrapper: {
@@ -91,18 +89,19 @@ const useStyles = makeStyles((theme) => ({
 
   form_left: {
     float: "left",
-    background:
-      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to bottom, #004e92, #000428)",
+    background: "linear-gradient(to bottom, #004e92, #000428)",
     padding: "0px",
     width: "50%",
-    minHeight: "94vh",
+    minHeight: "100vh",
   },
   form_right: {
     float: "right",
     padding: "0px",
     width: "50%",
     background: "#fff",
-    minHeight: "94vh",
+    minHeight: "100vh",
   },
   clearfix: {
     clear: "both",
@@ -121,8 +120,9 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     margin: theme.spacing(3, 0, 0),
     width: "100%",
-    background:
-      "linear-gradient(90deg, rgba(12,52,81,1) 35%, rgba(24,100,128,1) 100%)",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to right, #004e92, #000428)",
+    background: "linear-gradient(to right, #004e92, #000428)",
     color: "#ffffff",
   },
   form_heading: {
@@ -138,15 +138,13 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "0",
   },
   footer: {
-    background: "#0c3451",
     color: "#fff",
     padding: "10px 10px",
-    textAlign: "center",
+    textAlign: "left",
     margin: "0 0 0 0",
     position: "fixed",
-    bottom: "0",
-    width: "100%",
-    height: "6vh",
+    bottom: "20px",
+    left: "10rem",
   },
   companyLogos: {
     width: "100px",
@@ -158,7 +156,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "2px 2px 4px #333",
     padding: "40px 20px",
     borderRadius: "100px",
-    background: "#0c3451",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to right, #004e92, #000428)",
+    background: "linear-gradient(to right, #004e92, #000428)",
+    zIndex: "1",
   },
   form_control: {
     width: "100%",
@@ -175,7 +176,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
   const classes = useStyles();
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
   const { register, handleSubmit, errors } = useForm(); // initialize the hook
 
   const history = useHistory();
@@ -183,52 +185,48 @@ const Login = () => {
   const navigatesTo = () => history.push("/resetpassword");
 
   useEffect(() => {
-    currentUser()
-  },[]);
+    currentUser();
+  }, []);
 
-
-  const currentUser=async()=>{
+  const currentUser = async () => {
     let user = await Auth.currentAuthenticatedUser();
-    if(user){
+    if (user) {
       navigateToDashboard();
     }
-  }
+  };
 
-  
-
-  
   const onSubmit = (values) => {
     let { username, password } = values;
 
     setLoading(true);
-
+    setMessage(null)
     Auth.signIn(username, password)
-      .then(user => {
-        console.log(user)
-        if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+      .then((user) => {
+        console.log(user);
+        if (user.challengeName === "NEW_PASSWORD_REQUIRED") {
           Auth.completeNewPassword(
-              user,               // the Cognito User Object
-              password,       // the new password
-          ).then(user => {
+            user, // the Cognito User Object
+            password // the new password
+          )
+            .then((user) => {
               // at this time the user is logged in if no MFA required
               console.log(user);
               navigateToDashboard();
-          }).catch(e => {
-            console.log(e);
-          });
-      } else {
-        navigateToDashboard();
-      }
-       
+            })
+            .catch((e) => {
+              console.log(e);
+              setMessage(e.message)
+            });
+        } else {
+          navigateToDashboard();
+        }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-
+        setMessage(err.message)
         setLoading(false);
       });
   };
-
-
 
   return (
     <>
@@ -250,6 +248,9 @@ const Login = () => {
                   Ut enim ad minim veniam, quis nostrud exercitation ullamco
                   laboris nisi ut aliquip ex ea commodo consequat.{" "}
                 </p>
+                <div className={classes.footer}>
+                  <p>© 2021 copyright. All right reserved</p>
+                </div>
               </div>
             </div>
             <div className={classes.form_right}>
@@ -258,13 +259,28 @@ const Login = () => {
                 <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
                   <div className={classes.form_group}>
                     <PersonOutlineOutlinedIcon className={classes.svg_icon} />
-                    <input className={classes.form_control} placeHolder="username" name="username" ref={register({ required: true })}/>
-                    <div className={classes.error}>{errors.username && 'Username is required.'}</div>
+                    <input
+                      className={classes.form_control}
+                      name="username"
+                      ref={register({ required: true })}
+                    />
+                    <div className={classes.error}>
+                      {errors.username && "Username is required."}
+                    </div>
                   </div>
                   <div className={classes.form_group}>
                     <VpnKeyOutlinedIcon className={classes.svg_icon} />
-                    <input className={classes.form_control} placeHolder="password" name="password"  ref={register({ required: true })}/>
-                    <div className={classes.error}>{errors.password && 'password is required.'}</div>
+                    <input
+                      className={classes.form_control}
+                      name="password"
+                      ref={register({ required: true })}
+                    />
+                    <div className={classes.error}>
+                      {errors.password && "password is required."}
+                    </div>
+                    <div className={classes.error}>
+                      {message}
+                    </div>
                   </div>
                   <Link
                     to="/resetpassword"
@@ -280,6 +296,12 @@ const Login = () => {
                     type="submit"
                     value="Log In"
                   >
+                    {loading && (
+                      <i
+                        className="fa fa-refresh fa-spin"
+                        style={{ marginRight: "5px" }}
+                      />
+                    )}
                     Log In
                   </Button>
                 </form>
@@ -287,9 +309,6 @@ const Login = () => {
             </div>
             <div className={classes.clearfix}></div>
           </div>
-        </div>
-        <div className={classes.footer}>
-          <p>© 2021 copyright. All right reserved</p>
         </div>
       </div>
     </>

@@ -20,10 +20,14 @@ import LastPageIcon               from '@material-ui/icons/LastPage';
 import CssBaseline                from "@material-ui/core/CssBaseline";
 import Box                        from "@material-ui/core/Box";
 import Container                  from "@material-ui/core/Container";
+import Card                       from '@material-ui/core/Card';
+import CardContent                from '@material-ui/core/CardContent';
+import SearchIcon                 from '@material-ui/icons/Search';
 import                                 "../dashboard/Dashboard.css";
 import Copyright                  from "../../components/Copyright";
 import Header                     from "../../components/pages-layout/header/Header";
 import Sidebar                    from "../../components/pages-layout/sidebar/Sidebar";
+import SearchBar                  from "../../components/SearchBar"; 
 
 
 
@@ -132,7 +136,9 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
   },
   theader: {
-    background: "#0d3552",
+    background: "#000428",
+    background: "-webkit-linear-gradient(to right, #004e92, #000428)",
+    background: "linear-gradient(to right, #004e92, #000428)",
     "& tr": {
       "& th": {
         color: "#fff",
@@ -144,6 +150,22 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "25px",
     boxShadow: "2px 1px 9px #ccc",
     background: "#fff",
+  },
+  card_box: {
+    marginBottom: "1em",
+  },
+  form_group: {
+    position: "relative",
+    width: "360px",
+    "& .MuiFormControl-root": {
+      width: "100%",
+    },
+  },
+  search_icon: {
+    position: "absolute",
+    top: "17px",
+    left: "8px",
+    zIndex: "1",
   },
 }));
 
@@ -181,6 +203,14 @@ const CustomizedTables = () => {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+          <Card className={classes.card_box}>
+            <CardContent>
+              <div className={classes.form_group}>
+                <SearchIcon className={classes.search_icon} />
+                <SearchBar />
+              </div>
+            </CardContent>
+          </Card>
           <TableContainer>
             <Table
               className={classes.table}

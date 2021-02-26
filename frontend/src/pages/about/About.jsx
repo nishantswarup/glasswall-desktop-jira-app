@@ -79,7 +79,7 @@ export default function About() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <h2>ABOUT Us</h2>
+          <h2>ABOUT US</h2>
           <Box pt={4}>
             <Copyright />
           </Box>
