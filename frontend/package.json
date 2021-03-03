@@ -1,7 +1,11 @@
 {
-  "name": "new-project",
+  "name": "glaswall-desktop-jira",  
   "version": "0.1.0",
-  "private": true,
+  "tagVersion": "v0.1.0",
+  "repo": "glasswall-desktop-jira-app",
+  "repo_owner": "k8-proxy",
+  "app_name": "glasswall-desktop-jira-app",
+  "description": "Glasswall desktop application visualize jira",  
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.33",
     "@material-ui/core": "^4.11.3",
@@ -26,7 +30,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy_test": "gh-pages -d build",
+    "deploy": "cp CNAME ./build ; gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
