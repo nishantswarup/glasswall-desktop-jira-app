@@ -1,11 +1,11 @@
 {
-  "name": "glaswall-desktop-jira-app",  
+  "name": "glaswall-desktop-jira-app",
   "version": "0.1.1",
   "tagVersion": "v0.1.1",
   "repo": "glasswall-desktop-jira-app",
   "repo_owner": "k8-proxy",
-  "app_name": "glasswall-desktop-jira-app",  
-  "description": "Glasswall desktop application visualize jira",  
+  "app_name": "glasswall-desktop-jira-app",
+  "description": "Glasswall desktop application visualize jira",
   "homepage": "https://k8-proxy.github.io/glasswall-desktop-jira-app/",
   "dependencies": {
     "@aws-amplify/ui-react": "^0.2.33",
