@@ -1,4 +1,6 @@
 import { Switch, Route, Redirect } from "react-router-dom";
+import { BrowserRouter }           from "react-router-dom";
+
 import {Amplify, Auth}             from "aws-amplify";
 import                                  "./App.css";
 import                                  "../node_modules/font-awesome/css/font-awesome.min.css";
@@ -20,6 +22,7 @@ const App = () => {
 
   return (
     <div>
+      <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/dashboard" component={CustomizedTables} />
@@ -31,6 +34,7 @@ const App = () => {
         <Route exact path="/my-account" component={MyAccount} />
         <Redirect to="/" />
       </Switch>
+      </BrowserRouter>
     </div>
   );
 };
