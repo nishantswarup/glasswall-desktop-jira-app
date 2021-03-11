@@ -25,6 +25,11 @@ jobs:
           npm install
           CI= npm run build
           rm -rf node_modules/gh-pages/.cache
+
+      - name: Unit Tests        
+        run: |          
+          npm run test
+
       - name: Deploy
         if: startsWith(github.ref, 'refs/tags/v')
         uses: JamesIves/github-pages-deploy-action@3.6.2
