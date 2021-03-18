@@ -1,34 +1,35 @@
-import React                      from 'react';
-import {useState, useEffect}      from 'react'
-import axios                      from 'axios'
-import { makeStyles, useTheme }   from '@material-ui/core/styles';
-import PropTypes                  from 'prop-types';
-import Table                      from '@material-ui/core/Table';
-import TableBody                  from '@material-ui/core/TableBody';
-import TableCell                  from '@material-ui/core/TableCell';
-import TableHead                  from '@material-ui/core/TableHead';
-import TableFooter                from '@material-ui/core/TableFooter';
-import TableSortLabel             from '@material-ui/core/TableSortLabel';
-import TablePagination            from '@material-ui/core/TablePagination';
-import TableContainer             from '@material-ui/core/TableContainer';
-import TableRow                   from '@material-ui/core/TableRow';
-import IconButton                 from '@material-ui/core/IconButton';
-import FirstPageIcon              from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft          from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight         from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon               from '@material-ui/icons/LastPage';
-import CssBaseline                from "@material-ui/core/CssBaseline";
-import Box                        from "@material-ui/core/Box";
-import Container                  from "@material-ui/core/Container";
-import Card                       from '@material-ui/core/Card';
-import CardContent                from '@material-ui/core/CardContent';
-import SearchIcon                 from '@material-ui/icons/Search';
-import                                 "../dashboard/Dashboard.css";
-import Copyright                  from "../../components/Copyright";
-import Header                     from "../../components/pages-layout/header/Header";
-import Sidebar                    from "../../components/pages-layout/sidebar/Sidebar";
-import SearchBar                  from "../../components/SearchBar"; 
-
+import React                    from 'react';
+import { useState, useEffect }  from 'react'
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import PropTypes                from 'prop-types';
+import Table                    from '@material-ui/core/Table';
+import TableBody                from '@material-ui/core/TableBody';
+import TableCell                from '@material-ui/core/TableCell';
+import TableHead                from '@material-ui/core/TableHead';
+import TableFooter              from '@material-ui/core/TableFooter';
+import TableSortLabel           from '@material-ui/core/TableSortLabel';
+import TablePagination          from '@material-ui/core/TablePagination';
+import TableContainer           from '@material-ui/core/TableContainer';
+import TableRow                 from '@material-ui/core/TableRow';
+import IconButton               from '@material-ui/core/IconButton';
+import FirstPageIcon            from '@material-ui/icons/FirstPage';
+import KeyboardArrowLeft        from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight       from '@material-ui/icons/KeyboardArrowRight';
+import LastPageIcon             from '@material-ui/icons/LastPage';
+import CssBaseline              from "@material-ui/core/CssBaseline";
+import Box                      from "@material-ui/core/Box";
+import Container                from "@material-ui/core/Container";
+import Card                     from '@material-ui/core/Card';
+import CardContent              from '@material-ui/core/CardContent';
+import SearchIcon               from '@material-ui/icons/Search';
+import                                "../dashboard/Dashboard.css";
+import Copyright                from "../../components/Copyright";
+import Header                   from "../../components/pages-layout/header/Header";
+import Sidebar                  from "../../components/pages-layout/sidebar/Sidebar";
+import SearchBar                from "../../components/SearchBar";
+import Auth                     from '@aws-amplify/auth';
+import Lambda                   from 'aws-sdk/clients/lambda';
+import awsconfig                from '../../aws-exports';
 
 
 const useStyles1 = makeStyles((theme) => ({
@@ -76,8 +77,8 @@ function TablePaginationActions(props) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowRight />
         ) : (
-          <KeyboardArrowLeft />
-        )}
+            <KeyboardArrowLeft />
+          )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
@@ -87,8 +88,8 @@ function TablePaginationActions(props) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowLeft />
         ) : (
-          <KeyboardArrowRight />
-        )}
+            <KeyboardArrowRight />
+          )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
@@ -173,125 +174,148 @@ const CustomizedTables = () => {
   const url = "https://jsonplaceholder.typicode.com/users";
 
   const [data, setData] = useState([]);
+  const [projectname, setProjectname] = useState("");
+
+  Auth.configure(awsconfig);
 
   useEffect(() => {
-    const users = axios.get(url).then((json) => setData(json.data));
-  }, []);
+    //const users = axios.get(url).then((json) => setData(json.data));
 
-  const classes = useStyles();
+    Auth.currentCredentials().then(credentials => {
+      const lambda = new Lambda({ credentials: Auth.essentialCredentials(credentials), 'region': 'eu-west-2' });
+      console.log("lambda" + lambda)
+      lambda.invoke({
+        FunctionName: 'arn:aws:lambda:eu-west-2:785217600689:function:jira-api-dev-getJiradata',
+        Payload: "",
+      }, function(err, data) {
+        if (err) {
+          console.log(err, err.stack); // an error occurred
+        }
+        else{
+          console.log("Lambda:" + data.Payload);
+          let payload  = data.Payload;
+          setProjectname(JSON.parse(payload).projects[0].name);
+          setData(JSON.parse(payload).projects[0].issues)
+        }                // successful response
+      });
+    });
+    }, []);
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const classes = useStyles();
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    const emptyRows = data?
+      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage):0;
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
 
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Header />
-      <Sidebar />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Card className={classes.card_box}>
-            <CardContent>
-              <div className={classes.form_group}>
-                <SearchIcon className={classes.search_icon} />
-                <SearchBar />
-              </div>
-            </CardContent>
-          </Card>
-          <TableContainer>
-            <Table
-              className={classes.table}
-              aria-label="custom pagination table"
-            >
-              <TableHead className={classes.theader}>
-                <TableRow>
-                  <TableCell>
-                    ID
+    const handleChangeRowsPerPage = (event) => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+
+    return (
+      <div className={classes.root}>
+        <CssBaseline />
+        <Header />
+        <Sidebar />
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Container maxWidth="lg" className={classes.container}>
+            <Card className={classes.card_box}>
+              <CardContent>
+                <div className={classes.form_group}>
+                  <SearchIcon className={classes.search_icon} />
+                  <SearchBar />
+                </div>
+              </CardContent>
+            </Card>
+            <TableContainer>
+              <Table
+                className={classes.table}
+                aria-label="custom pagination table"
+              >
+                <TableHead className={classes.theader}>
+                  <TableRow>
+                    <TableCell>
+                      ID
                     <TableSortLabel />
-                  </TableCell>
-                  <TableCell>Name </TableCell>
-                  <TableCell>
-                    Username
+                    </TableCell>
+                    <TableCell>Project Name </TableCell>
+                    <TableCell>
+                      Status
                     <TableSortLabel />
-                  </TableCell>
-                  <TableCell>
-                    Email
+                    </TableCell>
+                    <TableCell>
+                      Summary
                     <TableSortLabel />
-                  </TableCell>
-                  <TableCell>Address</TableCell>
-                  <TableCell>Zip Code</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(rowsPerPage > 0
-                  ? data.slice(
+                    </TableCell>
+                    <TableCell>Reporter</TableCell>
+                    <TableCell>Comments</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                {data && (rowsPerPage > 0
+                    ? data&&data.slice(
                       page * rowsPerPage,
                       page * rowsPerPage + rowsPerPage
                     )
-                  : data
-                ).map((row) => (
-                  <TableRow className={classes.tableRow} hover key={row.name}>
-                    <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.username}</TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.address.city}</TableCell>
-                    <TableCell>{row.address.zipcode}</TableCell>
-                  </TableRow>
-                ))}
+                    : data
+                  ).map((row) => (
+                    <TableRow className={classes.tableRow} hover key={row.externalId}>
+                      <TableCell>{row.externalId}</TableCell>
+                      <TableCell>{projectname}</TableCell>
+                      <TableCell>{row.status}</TableCell>
+                      <TableCell>{row.summary}</TableCell>
+                      <TableCell>{row.reporter}</TableCell>
+                      <TableCell>{JSON.stringify(row.comments)}</TableCell>
+                      {/* <TableCell>{row.comments && row.comments[1]}</TableCell> */}
+                    </TableRow>
+                  ))}
 
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
-                    <TableCell colSpan={6} />
+                  {data && emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
+                </TableBody>
+                <TableFooter>
+                  <TableRow>
+                    <TablePagination
+                      className={classes.paginationdiv}
+                      rowsPerPageOptions={[
+                        5,
+                        10,
+                        25,
+                        { label: "All", value: -1 },
+                      ]}
+                      colSpan={6}
+                      count={data?data.length:0}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        inputProps: { "aria-label": "rows per page" },
+                        native: true,
+                      }}
+                      onChangePage={handleChangePage}
+                      onChangeRowsPerPage={handleChangeRowsPerPage}
+                      ActionsComponent={TablePaginationActions}
+                    />
                   </TableRow>
-                )}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    className={classes.paginationdiv}
-                    rowsPerPageOptions={[
-                      5,
-                      10,
-                      25,
-                      { label: "All", value: -1 },
-                    ]}
-                    colSpan={6}
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: { "aria-label": "rows per page" },
-                      native: true,
-                    }}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
-                  />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
-      </main>
-    </div>
-  );
-};
+                </TableFooter>
+              </Table>
+            </TableContainer>
+            <Box pt={4}>
+              <Copyright />
+            </Box>
+          </Container>
+        </main>
+      </div>
+    );
+  };
 
-export default CustomizedTables;
+  export default CustomizedTables;

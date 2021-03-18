@@ -18,7 +18,7 @@ const App = () => {
   
   console.log(awsconfig);
   Amplify.configure(awsconfig);
-  Auth.configure(awsconfig);
+  //Auth.configure(awsconfig);
 
   return (
     <div>

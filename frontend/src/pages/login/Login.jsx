@@ -262,6 +262,7 @@ const Login = () => {
                     <input
                       className={classes.form_control}
                       name="username"
+                      placeholder="Username"
                       ref={register({ required: true })}
                     />
                     <div className={classes.error}>
@@ -273,6 +274,8 @@ const Login = () => {
                     <input
                       className={classes.form_control}
                       name="password"
+                      type="password"
+                      placeholder="Password"
                       ref={register({ required: true })}
                     />
                     <div className={classes.error}>
